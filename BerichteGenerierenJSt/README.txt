@@ -5,6 +5,7 @@ Nach Beachtung von unten kann das Programm direkt mit Python geöffnet werden oh
 Das Hauptprogramm "BerichteErstellen.py" braucht:
 - reportLab | pip install reportlab
 - pandas    | pip install Pandas
+pip install openpyxl
 
 - Excel Datei mit dem Name: data.xlsx | Vorlage ist im Ordner
  - Absätze werden durch ein ";" gekennzeichnet
