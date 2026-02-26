@@ -1,7 +1,4 @@
 # pip install reportlab pandas
-
-
-
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 import string
@@ -30,8 +27,12 @@ def writeText(x, y, textString, c:canvas, schriftGroesse = 10, color="black", ab
     if color == "white":
         c.setFillColorRGB(1,1,1)
     d = " "
-    textString = textString.split(";")
+    textString = str(textString).split(";")
     for i in textString:
+        if i.startswith("Unnamed"):
+            continue
+        # if y == 0.895:
+        #     i.split(" ")
         c.drawString(x,y,i)
         y = y - schriftGroesse*abstand
 
@@ -53,11 +54,11 @@ def berichtheft(z):
         #Lfd. Nr.1 Themen der Woche
         writeText(x*0.88, y*0.55,f"{z[6]}",c)
         #Betriebliche Tätigkeit
-        writeText(x*0.1, y*0.85,f"{z[3]}",c, schriftGroesse=15)
+        writeText(x*0.1, y*0.85,f"{z[3]}",c, schriftGroesse=12)
         #Themen der Woche
-        writeText(x*0.1, y*0.55,f"{z[5]}",c, schriftGroesse=15)
+        writeText(x*0.1, y*0.55,f"{z[5]}",c, schriftGroesse=12)
         #Berufsschule
-        writeText(x*0.1, y*0.28,f"{z[7]}",c, schriftGroesse=15)
+        writeText(x*0.1, y*0.28,f"{z[7]}",c, schriftGroesse=12)
         #Aktuelles datum
         writeText(x*0.15, y*0.13,f"{datum}",c)
         writeText(x*0.6, y*0.13,f"{datum}",c)
