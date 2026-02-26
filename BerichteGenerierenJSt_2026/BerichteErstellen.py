@@ -1,5 +1,7 @@
 # pip install reportlab pandas
 
+
+
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 import string
@@ -32,6 +34,7 @@ def writeText(x, y, textString, c:canvas, schriftGroesse = 10, color="black", ab
     for i in textString:
         c.drawString(x,y,i)
         y = y - schriftGroesse*abstand
+
     c.setFillColorRGB(0,0,0)
 
 
@@ -58,8 +61,8 @@ def berichtheft(z):
         #Aktuelles datum
         writeText(x*0.15, y*0.13,f"{datum}",c)
         writeText(x*0.6, y*0.13,f"{datum}",c)
-        writeText(x*0.30, y*0.13,f"{datum}",c)
-        writeText(x*0.10, y*0.13,f"{datum}",c)
+        writeText(x*0.375, y*0.13,f"{datum}",c)
+        writeText(x*0.785, y*0.13,f"{datum}",c)
         #---------------------für empty
         writeText(x*0.1, y*0.936,f"Name;{subFach}",c, color="white")
         writeText(x*0.3, y*0.936,f"{name};{fach}",c, color="white")
@@ -81,12 +84,8 @@ def berichtheft(z):
         writeText(x*0.55, y*0.08,f"Unterschrift Ausbilder/in",c,schriftGroesse=7)
         writeText(x*0.74, y*0.08,f"Unterschrift gesetzliche/r Vertreter/in",c,schriftGroesse=7)
         writeText(x*0.07, y*0.06,f"\u00B9 Zuordnung zu der Laufenden Nummer (Unterpunkte) des Ausbildungsrahmenplanes oder des betrieblichen Ausbildungsplanes",c,schriftGroesse=7)
-
-        c.save()
-        
+        c.save() 
     return
-
-
 # df = pd.read_excel('data.xlsx')
 
 
