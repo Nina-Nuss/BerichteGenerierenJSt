@@ -31,8 +31,8 @@ def writeText(x, y, textString, c:canvas, schriftGroesse = 10, color="black", ab
     for i in textString:
         if i.startswith("Unnamed"):
             continue
-        # if y == 0.895:
-        #     i.split(" ")
+        if y == 0.850:
+            i.split(" ")
         c.drawString(x,y,i)
         y = y - schriftGroesse*abstand
 
