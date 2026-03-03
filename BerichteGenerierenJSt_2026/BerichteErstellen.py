@@ -22,12 +22,35 @@ filename = os.path.join(here, 'data.xlsx')
 
 print(filename)
 
-def writeText(x, y, textString, c:canvas, schriftGroesse = 10, color="black", abstand = 1.3):
+def textUmbruch(text, maxZeichen=50):
+    """Fügt Semikolons ein, wenn eine Zeile mehr als maxZeichen Zeichen hat.
+    Trennt möglichst an Wortgrenzen."""
+    ergebnis = []
+
+    for abschnitt in str(text).split(";"):  # bestehende Umbrüche beachten
+        woerter = abschnitt.split(" ")
+        zeile = ""
+        for wort in woerter:
+            if zeile and len(zeile) + 1 + len(wort) > maxZeichen:
+                ergebnis.append(zeile)
+                zeile = wort
+            else:
+                zeile = (zeile + " " + wort).strip()
+        if zeile:
+            ergebnis.append(zeile)
+    return ";".join(ergebnis)
+
+
+def writeText(x, y, textString, c:canvas, schriftGroesse = 10, color="black", abstand = 1.3, maxZeichen=50, keinTextumbruch=False):
     c.setFontSize(schriftGroesse)
     if color == "white":
         c.setFillColorRGB(1,1,1)
     d = " "
-    textString = str(textString).split(";")
+    if keinTextumbruch:
+        textString = textString.split(";")
+    else:
+        textString = textUmbruch(textString, maxZeichen).split(";")
+
     for i in textString:
         if i.startswith("Unnamed"):
             continue
@@ -69,11 +92,11 @@ def berichtheft(z):
         writeText(x*0.3, y*0.936,f"{name};{fach}",c, color="white")
         writeText(x*0.5, y*0.936,f"Ausbildungsnachweis Nr.;KW und Jahr",c, color="white")
         writeText(x*0.1, y*0.9,f"Betriebliche Tätigkeit",c)
-        writeText(x*0.1, y*0.89,f"(Praktisches Arbeiten, Ausführen von Arbeitsanweisungen)",c,schriftGroesse=7)
+        writeText(x*0.1, y*0.89,f"(Praktisches Arbeiten, Ausführen von Arbeitsanweisungen)",c,schriftGroesse=7, keinTextumbruch=True)
         writeText(x*0.872, y*0.895,f"Lfd. Nr.\u00B9",c)
         writeText(x*0.872, y*0.6,f"Lfd. Nr.\u00B9",c)
         writeText(x*0.1, y*0.602,f"Themen der Woche",c)
-        writeText(x*0.1, y*0.592,f"(Unterweisungen, Lehrgespräche, betrieblicher Unterricht, Projekte)",c,schriftGroesse=7)
+        writeText(x*0.1, y*0.592,f"(Unterweisungen, Lehrgespräche, betrieblicher Unterricht, Projekte)",c,schriftGroesse=7, keinTextumbruch=True)
         writeText(x*0.1, y*0.325,f"Berufsschule",c)
         writeText(x*0.1, y*0.315,f"(Themen und Schwerpunkte des Unterrichts)",c,schriftGroesse=7)
         writeText(x*0.09, y*0.13,f"Datum:",c)
@@ -84,7 +107,7 @@ def berichtheft(z):
         writeText(x*0.31, y*0.08,f"Unterschrift Ausbildungsbeauftragte/r",c,schriftGroesse=7)
         writeText(x*0.55, y*0.08,f"Unterschrift Ausbilder/in",c,schriftGroesse=7)
         writeText(x*0.74, y*0.08,f"Unterschrift gesetzliche/r Vertreter/in",c,schriftGroesse=7)
-        writeText(x*0.07, y*0.06,f"\u00B9 Zuordnung zu der Laufenden Nummer (Unterpunkte) des Ausbildungsrahmenplanes oder des betrieblichen Ausbildungsplanes",c,schriftGroesse=7)
+        writeText(x*0.07, y*0.06,f"\u00B9 Zuordnung zu der Laufenden Nummer (Unterpunkte) des Ausbildungsrahmenplanes oder des betrieblichen Ausbildungsplanes",c,schriftGroesse=7, maxZeichen=1000)
         c.save() 
     return
 # df = pd.read_excel('data.xlsx')
