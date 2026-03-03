@@ -26,22 +26,21 @@ def textUmbruch(text, maxZeichen=50):
     """Fügt Semikolons ein, wenn eine Zeile mehr als maxZeichen Zeichen hat.
     Trennt möglichst an Wortgrenzen."""
     ergebnis = []
-
     for abschnitt in str(text).split(";"):  # bestehende Umbrüche beachten
         woerter = abschnitt.split(" ")
         zeile = ""
         for wort in woerter:
             if zeile and len(zeile) + 1 + len(wort) > maxZeichen:
-                ergebnis.append(zeile)
+                ergebnis.append(zeile) 
                 zeile = wort
             else:
                 zeile = (zeile + " " + wort).strip()
-        if zeile:
+        if zeile and len(zeile) < maxZeichen:
             ergebnis.append(zeile)
     return ";".join(ergebnis)
 
 
-def writeText(x, y, textString, c:canvas, schriftGroesse = 10, color="black", abstand = 1.3, maxZeichen=50, keinTextumbruch=False):
+def writeText(x, y, textString, c:canvas, schriftGroesse = 10, color="black", abstand = 1.3, maxZeichen=60, keinTextumbruch=False):
     c.setFontSize(schriftGroesse)
     if color == "white":
         c.setFillColorRGB(1,1,1)
