@@ -1,1 +1,2 @@
-BerichteGenerierenJSt/generierteBerichte/*.pdf
+/generierteBerichte/*.pdf
+!/generierteBerichte/.gitkeep
